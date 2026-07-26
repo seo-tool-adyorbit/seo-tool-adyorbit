@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI SEO PDF Automation Suite | Smart TFN Formatting Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Quill.js Rich Text Editor CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+
+        <!-- 1. LEFT NAVIGATION SIDEBAR (250px) -->
+        <aside class="left-sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <h2 class="brand-title">SEO PDF Suite</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <div class="nav-section-label">WORKSPACE</div>
+                <li class="nav-item active" id="navProjects"><a href="#"><i class="fa-solid fa-folder-open"></i> Projects</a></li>
+                <li class="nav-item" id="navImport"><a href="#"><i class="fa-solid fa-cloud-arrow-up"></i> Import Doc</a></li>
+                <li class="nav-item" id="navVariables"><a href="#"><i class="fa-solid fa-code"></i> Variables</a></li>
+
+                <div class="nav-section-label">ENGINE & BULK</div>
+                <li class="nav-item" id="navTfnEngine"><a href="#"><i class="fa-solid fa-wand-magic-sparkles"></i> TFN Engine</a></li>
+                <li class="nav-item" id="navAiRewrite"><a href="#"><i class="fa-solid fa-robot"></i> AI Rewrite</a></li>
+                <li class="nav-item" id="navGoogleSheets"><a href="#"><i class="fa-solid fa-table"></i> Google Sheets</a></li>
+                <li class="nav-item" id="navBulkQueue"><a href="#"><i class="fa-solid fa-gears"></i> Bulk Queue</a></li>
+
+                <div class="nav-section-label">RESOURCES</div>
+                <li class="nav-item" id="navTemplates"><a href="#"><i class="fa-solid fa-layer-group"></i> Templates</a></li>
+                <li class="nav-item" id="navHistory"><a href="#"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+                <li class="nav-item" id="navSettings"><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button class="theme-btn" id="themeToggleBtn">
+                    <i class="fa-solid fa-moon"></i> Dark Theme
+                </button>
+            </div>
+        </aside>
+
+        <!-- 2. CENTER GOOGLE DOCS CANVAS (FLEX: 1) -->
+        <main class="center-canvas">
+            <header class="canvas-header">
+                <input type="text" class="doc-title-input" id="docTitleInput" value="Delta Airlines Flight Booking Guide">
+
+                <div class="canvas-actions">
+                    <span class="status-badge" id="statusBadge"><i class="fa-solid fa-circle-check"></i> Ready</span>
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <button class="export-pdf-btn" id="exportVectorPdfBtn" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+                            <i class="fa-solid fa-file-pdf"></i> Download PDF
+                        </button>
+                        <button class="export-pdf-btn" id="exportHtmlBtn" style="background: #3b82f6;">
+                            <i class="fa-solid fa-code"></i> Export HTML
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="editor-workspace">
+                <div class="editor-card">
+                    <div id="sourceEditor"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 3. RIGHT DOCUMENT INSPECTOR & REPLACEMENT PANEL (330px) -->
+        <aside class="right-sidebar">
+            <div class="inspector-header">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-color);"></i>
+                <span>TFN Replacement Panel</span>
+            </div>
+
+            <!-- SMART TFN FORMATTING ENGINE PANEL -->
+            <div class="tfn-replacement-card">
+                <div class="tfn-card-title">
+                    <i class="fa-solid fa-bolt"></i> Smart TFN Engine
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label class="input-label">Source Airline Name in Template:</label>
+                    <input type="text" class="tfn-input-field" id="sourceAirlineInput" value="Delta Airlines" placeholder="e.g. Delta Airlines">
+                </div>
+
+                <div>
+                    <label class="input-label">Enter Target Numbers (One per line for Alternating TFNs):</label>
+                    <textarea class="tfn-input-field" id="userDigitsInput" style="height: 65px; resize: vertical;" placeholder="Line 1: +1 (888) 830-8592&#10;Line 2: +44 20 7946 0958">+1 (888) 830-8592&#10;+44 20 7946 0958</textarea>
+                </div>
+
+                <!-- LIVE PREVIEW COMPARISON BOX -->
+                <div class="live-preview-box">
+                    <div class="preview-row">
+                        <span class="preview-label">Detected Competitor TFN</span>
+                    </div>
+                    <div class="preview-val-original" id="originalPreviewVal">+51*23*456(7890)</div>
+
+                    <div style="border-bottom: 1px dashed var(--border-color); margin: 4px 0;"></div>
+
+                    <div class="preview-row">
+                        <span class="preview-label">Target Formatted Output</span>
+                    </div>
+                    <div class="preview-val-output" id="outputPreviewVal">+1*88*830(8592)</div>
+                </div>
+
+                <button class="apply-tfn-btn" id="applySmartTfnBtn">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Apply Smart Replacement
+                </button>
+            </div>
+
+            <!-- GOOGLE SHEETS BULK AUTOMATION CARD -->
+            <div class="tfn-replacement-card" style="margin-top: 14px; border-color: var(--accent-color);">
+                <div class="tfn-card-title" style="color: #60a5fa;">
+                    <i class="fa-solid fa-table"></i> Google Sheets Bulk Automation
+                </div>
+
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.3;">
+                    <strong>CSV Columns:</strong><br>
+                    Col A = Airline Name | Col B = Headline | Col C = PDF Name
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label class="input-label">Paste Google Sheets CSV URL or Data:</label>
+                    <textarea class="tfn-input-field" id="googleSheetsCsvInput" style="height: 75px; resize: vertical;" placeholder="American Airlines, American Airlines Flight Guide, American_Guide&#10;United Airlines, United Airlines Cancellation Help, United_Guide">American Airlines, American Airlines Flight Guide, American_Guide&#10;United Airlines, United Airlines Cancellation Help, United_Guide&#10;Lufthansa, Lufthansa Ticket Booking Policy, Lufthansa_Guide</textarea>
+                </div>
+
+                <button class="apply-tfn-btn" id="generateBulkZipBtn" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <i class="fa-solid fa-file-zipper"></i> ⚡ Generate & Download Bulk ZIP
+                </button>
+            </div>
+
+            <!-- FAST SYSTEM STATUS METRICS -->
+            <div class="inspector-block" style="margin-top: 14px;">
+                <div class="block-title"><i class="fa-solid fa-bolt text-success"></i> Performance Status</div>
+                <div class="stat-row">
+                    <span>Engine Speed</span>
+                    <strong style="color: var(--success-color);">&lt; 10ms (Instant)</strong>
+                </div>
+                <div class="stat-row">
+                    <span>PDF Content Fidelity</span>
+                    <strong style="color: var(--success-color);">100% Exact Vector</strong>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- MODAL POPUPS FOR WORKSPACE TOOLS -->
+    <div id="appModalOverlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; width: 540px; max-width: 90%; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative;">
+            <button id="closeModalBtn" style="position: absolute; right: 16px; top: 16px; background: transparent; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer;">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Quill.js Script -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    
+    <!-- pdfmake & vfs_fonts for Pure Vector PDF Engine (~20KB) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake@2.5.7/batch.js"></script>
+
+    <!-- html2pdf.js for Fallback Layout Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- JSZip for Zip creation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>

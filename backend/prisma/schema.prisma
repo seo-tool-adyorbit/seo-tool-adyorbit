@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  name      String?
+  role      String     @default("USER")
+  documents Document[]
+  jobs      BulkJob[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Document {
+  id            String   @id @default(uuid())
+  title         String
+  contentHtml   String
+  sourceAirline String?
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model BulkJob {
+  id             String   @id @default(uuid())
+  status         String   @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED
+  totalPdfs      Int      @default(0)
+  completedPdfs  Int      @default(0)
+  downloadZipUrl String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model TfnPattern {
+  id             String   @id @default(uuid())
+  countryCode    String
+  originalFormat String
+  targetDigits   String
+  createdAt      DateTime @default(now())
+}

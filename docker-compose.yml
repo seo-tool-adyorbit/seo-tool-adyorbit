@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: pdf_suite_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: pdf_user
+      POSTGRES_PASSWORD: pdf_password_123
+      POSTGRES_DB: pdf_suite_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Redis for BullMQ Queue & Cache
+  redis:
+    image: redis:7-alpine
+    container_name: pdf_suite_redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  # 3. Python FastAPI PDF & AI Engine Microservice
+  pdf-engine:
+    build:
+      context: ./pdf-engine
+      dockerfile: Dockerfile
+    container_name: pdf_suite_engine
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+
+volumes:
+  postgres_data:
